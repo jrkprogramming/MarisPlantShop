@@ -9,9 +9,9 @@ from .serializers import ProductSerializer
 
 # Create your views here.
 
-@api_view(['GET'])
-def getRoutes(request):
-    return JsonResponse('Hello', safe=False)
+# @api_view(['GET'])
+# def getRoutes(request):
+#     return JsonResponse('Hello', safe=False)
 
 
 @api_view(['GET'])
