@@ -54,10 +54,10 @@ def userSignup(request):
     
     try:
         user = User.objects.create(
-            first_name = data['first_name'],
-            last_name = data['last_name'],
             username = data['username'],
             email = data['email'],
+            first_name = data['first_name'],
+            last_name = data['last_name'],
             password = make_password(data['password'])
         )
         serializer = UserSerializerWithToken(user, many=False)
@@ -65,6 +65,33 @@ def userSignup(request):
     except:
         message = {'detail': 'User with this email already exists!'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def editUser(request):
+    user = request.user
+    serializer = UserSerializer(user, many=False)
+    data = request.data
+    
+    user.username = data['username']
+    user.email = data['email']
+    user.first_name = data['first_name']
+    user.last_name = data['last_name']
+    if data['password'] != '':
+        user.password = make_password(data['password'])
+        
+    user.save()
+    
+    return Response(serializer.data)
+
+
+
+
+
+
+
+# Plant Views
 
 
 @api_view(['GET'])
