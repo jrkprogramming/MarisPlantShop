@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from .models import *
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class PlantSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
+        model = Plant
         fields = '__all__'

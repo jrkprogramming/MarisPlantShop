@@ -4,25 +4,20 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework.serializers import *
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Plant
+from .serializers import PlantSerializer
 
 # Create your views here.
 
-# @api_view(['GET'])
-# def getRoutes(request):
-#     return JsonResponse('Hello', safe=False)
-
-
 @api_view(['GET'])
-def getProducts(request):
-    products = Product.objects.all()
-    serializer = ProductSerializer(products, many=True)
+def getPlants(request):
+    plants = Plant.objects.all()
+    serializer = PlantSerializer(plants, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
-def getProduct(request, pk):
-    product = Product.objects.get(id=pk)
-    serializer = ProductSerializer(product, many=False)
+def getPlant(request, pk):
+    plant = Plant.objects.get(id=pk)
+    serializer = PlantSerializer(plant, many=False)
     return Response(serializer.data)

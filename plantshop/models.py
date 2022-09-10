@@ -3,16 +3,13 @@ from django.contrib.auth.models import User
 
 # Create your models here.
     
-class Product(models.Model):
+class Plant(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200, null=True, blank=True, default='')
+    image = models.ImageField(null=True, blank=True)
     description = models.TextField(null=True, blank=True, default='')
     price = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True, default=0)
     quantity = models.IntegerField(default=0)
-    rating = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True, default=0)
-    numReviews = models.IntegerField(null=True, default=0, blank=True)
-    image = models.ImageField(null=True, blank=True)
-    
 
     def __str__(self):
         return self.name
@@ -34,8 +31,7 @@ class Order(models.Model): #Cart
         return str(self.createdAt)
     
 class OrderItem(models.Model):
-    # customer = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    plant = models.ForeignKey(Plant, on_delete=models.SET_NULL, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=200, null=True, blank=True, default='')
     quantity = models.IntegerField(default=0, null=True, blank=True)
@@ -56,13 +52,3 @@ class ShippingAddress(models.Model):
     
     def __str__(self):
         return self.address
-    
-class Review(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    name = models.CharField(max_length=200, null=True, blank=True, default='')
-    rating = models.IntegerField(null=True, blank=True, default=0)
-    comment = models.TextField(null=True, blank=True, default='' )
-    
-    def __str__(self):
-        return str(self.rating)
