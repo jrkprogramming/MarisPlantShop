@@ -11,4 +11,6 @@ urlpatterns = [
     
     path('plants/', views.getPlants, name='plants'),
     path('plants/<str:pk>/', views.getPlant, name='plants'),
+    
+    path('add/', views.addOrderItems, name='add_orders'),
 ] 

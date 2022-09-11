@@ -8,8 +8,8 @@ from rest_framework import serializers
 from rest_framework import status
 from rest_framework.serializers import *
 from django.contrib.auth.models import User
-from .models import Plant
-from .serializers import PlantSerializer, UserSerializer, UserSerializerWithToken
+from .models import *
+from .serializers import PlantSerializer, UserSerializer, UserSerializerWithToken, OrderSerializer
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -35,14 +35,14 @@ class MyTokenObtainPairView(TokenObtainPairView):
     
     
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes(['IsAuthenticated'])
 def getUser(request):
     user = request.user
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes(['IsAuthenticated'])
 def getUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
@@ -68,7 +68,7 @@ def userSignup(request):
     
     
 @api_view(['PUT'])
-@permission_classes([IsAuthenticated])
+@permission_classes(['IsAuthenticated'])
 def editUser(request):
     user = request.user
     serializer = UserSerializer(user, many=False)
@@ -89,8 +89,6 @@ def editUser(request):
 
 
 
-
-
 # Plant Views
 
 
@@ -105,4 +103,65 @@ def getPlants(request):
 def getPlant(request, pk):
     plant = Plant.objects.get(id=pk)
     serializer = PlantSerializer(plant, many=False)
+    return Response(serializer.data)
+
+
+
+
+
+
+# Order Views
+
+@api_view(['POST'])
+@permission_classes(['IsAuthenticated'])
+def addOrderItems(request):
+    user = request.user
+    data = request.data
+    
+    orderItems = data['orderItems']
+    
+    if orderItems and len(orderItems) == 0:
+        return Response({'detail': 'No Order Items'}, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        # Create Order
+        
+        order = Order.objects.create(
+            user = user,
+            paymentMethod = data['paymentMethod'],
+            taxPrice = data['taxPrice'],
+            shippingPrice = data['shippingPrice'],
+            totalPrice = data['totalPrice'],
+        )
+        
+        # Create ShippingAddress
+        
+        shipping = ShippingAddress.objects.create(
+            order = order,
+            address=data['shippingAddress']['address'],
+            city=data['shippingAddress']['city'],
+            zipcode=data['shippingAddress']['zipcode'],
+            state=data['shippingAddress']['state'],
+        )
+        
+        # Create Order Items
+        
+        for i in orderItems:
+            plant = Plant.objects.get(id=i['plant'])
+            
+            item = OrderItem.objects.create(
+                plant = plant,
+                order=order,
+                name=plant.name,
+                cartQty=i['cartQty'],
+                price=i['price'],
+                image=plant.image.url
+            )
+            
+        #Update inventory 
+        
+        plant.quantity -= item.quantity
+        plant.save()
+    
+    serializer = OrderSerializer(order, many=True)    
+    
     return Response(serializer.data)
