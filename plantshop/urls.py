@@ -10,7 +10,8 @@ urlpatterns = [
     path('users/profile/edit/', views.editUser, name='edit_profile'),
     
     path('plants/', views.getPlants, name='plants'),
-    path('plants/<str:pk>/', views.getPlant, name='plants'),
+    path('plants/<str:pk>/', views.getPlant, name='plant'),
+    path('plants/delete/<str:pk>/', views.deletePlant, name='plant-delete'),
     
-    path('add/', views.addOrderItems, name='add_orders'),
-] 
+    path('orders/add/', views.addOrderItems, name='add_orders'),
+]

@@ -35,14 +35,14 @@ class MyTokenObtainPairView(TokenObtainPairView):
     
     
 @api_view(['GET'])
-@permission_classes(['IsAuthenticated'])
+@permission_classes([IsAuthenticated])
 def getUser(request):
     user = request.user
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes(['IsAuthenticated'])
+@permission_classes([IsAuthenticated])
 def getUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
@@ -68,7 +68,7 @@ def userSignup(request):
     
     
 @api_view(['PUT'])
-@permission_classes(['IsAuthenticated'])
+@permission_classes([IsAuthenticated])
 def editUser(request):
     user = request.user
     serializer = UserSerializer(user, many=False)
@@ -106,6 +106,12 @@ def getPlant(request, pk):
     return Response(serializer.data)
 
 
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deletePlant(request, pk):
+    plant = Plant.objects.get(id=pk)
+    plant.delete()
+    return Response('Plant Deleted')
 
 
 
@@ -113,7 +119,7 @@ def getPlant(request, pk):
 # Order Views
 
 @api_view(['POST'])
-@permission_classes(['IsAuthenticated'])
+@permission_classes([IsAuthenticated])
 def addOrderItems(request):
     user = request.user
     data = request.data
@@ -122,7 +128,9 @@ def addOrderItems(request):
     
     if orderItems and len(orderItems) == 0:
         return Response({'detail': 'No Order Items'}, status=status.HTTP_400_BAD_REQUEST)
+    
     else:
+        
         # Create Order
         
         order = Order.objects.create(
@@ -157,11 +165,9 @@ def addOrderItems(request):
                 image=plant.image.url
             )
             
-        #Update inventory 
-        
-        plant.quantity -= item.quantity
-        plant.save()
+            #Update inventory 
+            plant.quantity -= int(item.cartQty)
+            plant.save()
     
-    serializer = OrderSerializer(order, many=True)    
-    
-    return Response(serializer.data)
+        serializer = OrderSerializer(order, many=False)    
+        return Response(serializer.data)
