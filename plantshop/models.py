@@ -32,8 +32,9 @@ class Order(models.Model): #Cart
     
 class OrderItem(models.Model):
     plant = models.ForeignKey(Plant, on_delete=models.SET_NULL, null=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200, null=True, blank=True, default='')
+    cartQty = models.IntegerField(default=0, null=True, blank=True)
     quantity = models.IntegerField(default=0, null=True, blank=True)
     price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True, default=0)
     image = models.CharField(max_length=200, null=True, blank=True, default='')

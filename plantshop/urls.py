@@ -9,9 +9,12 @@ urlpatterns = [
     path('users/profile/', views.getUser, name='user_profile'),
     path('users/profile/edit/', views.editUser, name='edit_profile'),
     
-    path('plants/', views.getPlants, name='plants'),
-    path('plants/<str:pk>/', views.getPlant, name='plant'),
+    path('plants/', views.getPlants, name='plants-index'),
+    path('plants/create/', views.createPlant, name='plant-create'),
+    path('plants/<str:pk>/', views.getPlant, name='plant-detail'),
+    path('plants/edit/<str:pk>/', views.editPlant, name='plant-edit'),
     path('plants/delete/<str:pk>/', views.deletePlant, name='plant-delete'),
     
     path('orders/add/', views.addOrderItems, name='add_orders'),
+    path('orders/<str:pk>/', views.getOrderDetails, name='order_detail'),
 ]

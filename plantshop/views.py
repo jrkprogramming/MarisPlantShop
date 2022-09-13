@@ -106,6 +106,40 @@ def getPlant(request, pk):
     return Response(serializer.data)
 
 
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def createPlant(request):
+    user = request.user
+    
+    plant = Plant.objects.create(
+        user=user,
+        name='name',
+        price=0,
+        description='description',
+        quantity=0,
+    )
+    
+    serializer = PlantSerializer(plant, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def editPlant(request, pk):
+    data = request.data
+    plant = Plant.objects.get(id=pk)
+    
+    plant.name = data['name']
+    plant.price = data['price']
+    plant.description = data['description']
+    plant.quantity = data['quantity']
+    
+    plant.save()
+    
+    serializer = PlantSerializer(plant, many=False)
+    return Response(serializer.data)
+
+
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
 def deletePlant(request, pk):
@@ -125,6 +159,7 @@ def addOrderItems(request):
     data = request.data
     
     orderItems = data['orderItems']
+    print(orderItems)
     
     if orderItems and len(orderItems) == 0:
         return Response({'detail': 'No Order Items'}, status=status.HTTP_400_BAD_REQUEST)
@@ -153,6 +188,7 @@ def addOrderItems(request):
         
         # Create Order Items
         
+        
         for i in orderItems:
             plant = Plant.objects.get(id=i['plant'])
             
@@ -162,7 +198,7 @@ def addOrderItems(request):
                 name=plant.name,
                 cartQty=i['cartQty'],
                 price=i['price'],
-                image=plant.image.url
+                image=plant.image
             )
             
             #Update inventory 
@@ -171,3 +207,19 @@ def addOrderItems(request):
     
         serializer = OrderSerializer(order, many=False)    
         return Response(serializer.data)
+    
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getOrderDetails(request, pk):
+    user = request.user
+    
+    try:
+        order = Order.objects.get(id=pk)
+        if user.is_staff or order.user == user:
+            serializer = OrderSerializer(order, many=False)
+            return Response(serializer.data)
+        else:
+            Response({'detail': 'Not authorized to view this order'}, status=status.HTTP_400_BAD_REQUEST)
+    except:
+        return Response({'detail': 'Order does not exist'}, status=status.HTTP_400_BAD_REQUEST)

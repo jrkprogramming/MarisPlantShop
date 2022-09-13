@@ -29,6 +29,7 @@ class UserSerializerWithToken(UserSerializer):
     
     
     
+    
 class ShippingSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShippingAddress
@@ -54,8 +55,8 @@ class OrderSerializer(serializers.ModelSerializer):
         return serializer.data
     
     def get_shippingAddress(self, obj):
-        try:
-            address = ShippingSerializer(obj.shippingAddress, many=False).data
+        try: 
+            address = ShippingSerializer(obj.shippingaddress, many=False).data
         except:
             address = False
         return address
