@@ -198,7 +198,7 @@ def addOrderItems(request):
                 name=plant.name,
                 cartQty=i['cartQty'],
                 price=i['price'],
-                image=plant.image
+                image=plant.image.url
             )
             
             #Update inventory 
@@ -223,3 +223,16 @@ def getOrderDetails(request, pk):
             Response({'detail': 'Not authorized to view this order'}, status=status.HTTP_400_BAD_REQUEST)
     except:
         return Response({'detail': 'Order does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+@api_view(['POST'])
+def imageUpload(request):
+    data = request.data
+    
+    plant_id = data['plant_id']
+    plant = Plant.objects.get(id=plant_id)
+    
+    plant.image = request.FILES.get('image')
+    plant.save()
+    return Response("image was uploaded")

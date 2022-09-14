@@ -11,6 +11,7 @@ urlpatterns = [
     
     path('plants/', views.getPlants, name='plants-index'),
     path('plants/create/', views.createPlant, name='plant-create'),
+    path('plants/imgUpload/', views.imageUpload, name='img-upload'),
     path('plants/<str:pk>/', views.getPlant, name='plant-detail'),
     path('plants/edit/<str:pk>/', views.editPlant, name='plant-edit'),
     path('plants/delete/<str:pk>/', views.deletePlant, name='plant-delete'),
