@@ -44,7 +44,7 @@ class OrderItem(models.Model):
 
 
 class ShippingAddress(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
+    order = models.OneToOneField(Order, on_delete=models.SET_NULL, blank=True, null=True)
     address = models.CharField(max_length=200, null=True, blank=True, default='')
     city = models.CharField(max_length=200, null=True, blank=True, default='')
     state = models.CharField(max_length=200, null=True, blank=True, default='')

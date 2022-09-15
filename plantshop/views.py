@@ -213,16 +213,16 @@ def addOrderItems(request):
 @permission_classes([IsAuthenticated])
 def getOrderDetails(request, pk):
     user = request.user
+    order = Order.objects.get(id=pk)
     
-    try:
-        order = Order.objects.get(id=pk)
-        if user.is_staff or order.user == user:
-            serializer = OrderSerializer(order, many=False)
-            return Response(serializer.data)
-        else:
-            Response({'detail': 'Not authorized to view this order'}, status=status.HTTP_400_BAD_REQUEST)
-    except:
-        return Response({'detail': 'Order does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+    # try:
+    # if user.is_staff or order.user == user:
+    serializer = OrderSerializer(order, many=False)
+    return Response(serializer.data)
+    # else:
+        # Response({'detail': 'Not authorized to view this order'}, status=status.HTTP_400_BAD_REQUEST)
+    # except:
+        # return Response({'detail': 'Order does not exist'}, status=status.HTTP_400_BAD_REQUEST)
     
 
 
@@ -236,3 +236,6 @@ def imageUpload(request):
     plant.image = request.FILES.get('image')
     plant.save()
     return Response("image was uploaded")
+
+
+# def orderPaidStatus(request, pk)
