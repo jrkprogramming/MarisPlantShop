@@ -16,6 +16,7 @@ urlpatterns = [
     path('plants/edit/<str:pk>/', views.editPlant, name='plant-edit'),
     path('plants/delete/<str:pk>/', views.deletePlant, name='plant-delete'),
     
+    path('orders/', views.getOrdersAdmin, name='orders-admin'),
     path('orders/add/', views.addOrderItems, name='add_orders'),
     path('orders/myorders/', views.getOrders, name='myorders'),
     path('orders/<int:pk>/', views.getOrderDetails, name='order_details'),
