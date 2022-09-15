@@ -10,6 +10,7 @@ from rest_framework.serializers import *
 from django.contrib.auth.models import User
 from .models import *
 from .serializers import PlantSerializer, UserSerializer, UserSerializerWithToken, OrderSerializer
+from datetime import datetime
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -209,20 +210,25 @@ def addOrderItems(request):
         return Response(serializer.data)
     
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getOrders(request):
+    user = request.user
+    orders = user.order_set.all()
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
+
+
+    
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getOrderDetails(request, pk):
-    user = request.user
+    # user = request.user
     order = Order.objects.get(id=pk)
-    
-    # try:
-    # if user.is_staff or order.user == user:
     serializer = OrderSerializer(order, many=False)
     return Response(serializer.data)
-    # else:
-        # Response({'detail': 'Not authorized to view this order'}, status=status.HTTP_400_BAD_REQUEST)
-    # except:
-        # return Response({'detail': 'Order does not exist'}, status=status.HTTP_400_BAD_REQUEST)
     
 
 
@@ -238,4 +244,13 @@ def imageUpload(request):
     return Response("image was uploaded")
 
 
-# def orderPaidStatus(request, pk)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def orderPaidStatus(request, pk):
+    order = Order.objects.get(id=pk)
+    
+    order.isPaid = True
+    order.paidAt = datetime.now()
+    order.save()
+    return Response('ORDER PAID')
