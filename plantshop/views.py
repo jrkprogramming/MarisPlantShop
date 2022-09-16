@@ -262,3 +262,52 @@ def orderPaidStatus(request, pk):
     order.paidAt = datetime.now()
     order.save()
     return Response('ORDER PAID')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# from django.conf import settings
+# from rest_framework.views import APIView
+
+# import stripe
+# # This is your test secret API key.
+# stripe.api_key = settings.STRIPE_SECRET_KEY
+
+# class StripeCheckoutView(APIView):
+#     def post(self, request):
+#         try:
+#             checkout_session = stripe.checkout.Session.create(
+#                 line_items=[
+#                     {
+                        
+#                         'price': '{{PRICE_ID}}',
+#                         'quantity': 1,
+#                     },
+#                 ],
+#                 mode='payment',
+#                 success_url=YOUR_DOMAIN + '?success=true',
+#                 cancel_url=YOUR_DOMAIN + '?canceled=true',
+#                 automatic_tax={'enabled': True},
+#             )
+#         except Exception as e:
+#             return str(e)
+
+#         return redirect(checkout_session.url, code=303)
