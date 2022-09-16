@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -125,9 +127,9 @@ WSGI_APPLICATION = 'plantshop_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'plantshop',
-        'USER': 'plantshopuser',
-        'PASSWORD': 'plantshop',
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASS'),
         'HOST': 'localhost'
     }
 }
@@ -195,9 +197,11 @@ CORS_ALLOW_METHODS = [
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 AWS_QUERYSTRING_AUTH = False
-AWS_S3_ACCESS_KEY_ID = 'AKIATIPFMVT6KFTYEXG4'
+AWS_S3_ACCESS_KEY_ID = config('AWS_SECRET_KEY')
 AWS_S3_SECRET_ACCESS_KEY ='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'
 AWS_STORAGE_BUCKET_NAME = 'plantshop-bucket-jrk'
+
+
 
 
 # CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', 'https://localhost:3000']
