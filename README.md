@@ -5,8 +5,10 @@ Plant Cultivar
 Plant Cultivar is the name of my mother's small business and this ecommerce application is created to help her manage her orders and allows her customers to browse and purchase her products online.
 
 
-## Deployed Link:
-https://jmmz-ga-p3places-ui.herokuapp.com/
+### Technologies Used
+
+JavaScript, React, Redux, Python, Django, simpleJWT, PayPal API, Tailwind CSS, Pillow, AWS S3, 
+
 
 
 ### Features Implemented
