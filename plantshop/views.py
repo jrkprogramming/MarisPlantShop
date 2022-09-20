@@ -18,7 +18,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 # Create your views here.
 
-#
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -150,7 +149,6 @@ def deletePlant(request, pk):
 
 
 
-
 # Order Views
 
 @api_view(['POST'])
@@ -253,61 +251,12 @@ def imageUpload(request):
 
 
 
-@api_view(['GET'])
+@api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def orderPaidStatus(request, pk):
     order = Order.objects.get(id=pk)
     
     order.isPaid = True
-    order.paidAt = datetime.now()
+    order.paid_At = datetime.now()
     order.save()
     return Response('ORDER PAID')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# from django.conf import settings
-# from rest_framework.views import APIView
-
-# import stripe
-# # This is your test secret API key.
-# stripe.api_key = settings.STRIPE_SECRET_KEY
-
-# class StripeCheckoutView(APIView):
-#     def post(self, request):
-#         try:
-#             checkout_session = stripe.checkout.Session.create(
-#                 line_items=[
-#                     {
-                        
-#                         'price': '{{PRICE_ID}}',
-#                         'quantity': 1,
-#                     },
-#                 ],
-#                 mode='payment',
-#                 success_url=YOUR_DOMAIN + '?success=true',
-#                 cancel_url=YOUR_DOMAIN + '?canceled=true',
-#                 automatic_tax={'enabled': True},
-#             )
-#         except Exception as e:
-#             return str(e)
-
-#         return redirect(checkout_session.url, code=303)
