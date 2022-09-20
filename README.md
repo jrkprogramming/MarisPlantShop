@@ -9,28 +9,44 @@ Plant Cultivar is the name of my mother's small business and this ecommerce appl
 https://jmmz-ga-p3places-ui.herokuapp.com/
 
 
+### Features Implemented
+- Used Redux to manage global states with cart functionality, user authentication, and axios requests.
+- Implemented the PayPal API to allow customers to make PayPal / Venmo or debit / credit payments to place orders.
+- Configured AWS S3 to allow admin users upload and store images of their products to the store.
+
+
+
 ### SCREENSHOTS:
 
-Welcome Page / Home Route:
-![alt text](assets/pinit_landingPage.png)
-
 Login Page:
-![alt text](assets/pinit_loginPage.png)
+![alt text](assets/LoginPage.png)
 
 Signup Page:
-![alt text](assets/pinit_signupPage.png)
+![alt text](assets/SignupPage.png)
 
-Index page that displays all the pins from all the users. Includes Search bar that allows user to search for keywords for pins.
-![alt text](assets/pinit_homemapPage.png)
+Index page that displays all the plants for sale.
+![alt text](assets/PlantsIndexPage.png)
 
-This page only displays pins created by the signed in user (Profile Page)
-![alt text](assets/pinit_profilePage.png)
+Displays all the orders placed by the user, the status of the order, and the date the order was placed.
+![alt text](assets/MyOrdersPage.png)
 
-Form page to create new pins. Includes search bar that autocompletes places with an address (Google Maps Places API) and Drag and drop feature to upload images.
-![alt text](assets/pinit_newPinFormPage.png)
+Gives user the option to add to cart and select the quantity. Also lets users see a description of the plant set by the Admin.
+![alt text](assets/PlantDetailsPage.png)
 
-Sidebar that shows a list view of the pins on the map.
-![alt text](assets/pinit_sidebar.png)
+Addt to Cart redirects to the shopping cart page that lists the items that are currently in the user's cart.
+![alt text](assets/CartPage.png)
+
+Order Review before placing order. Gives details on tax, shipping cost (if applicable), and number of items.
+![alt text](assets/PlaceOrderPage.png)
+
+Order details page where customers can process card payments through PayPal.
+![alt text](assets/OrderDetailsPage.png)
+
+List of Plants where admin users can edit/remove/add plants to the store.
+![alt text](assets/AdminPlantsList.png)
+
+Lists all the orders placed by all the customers for admin users to see.
+![alt text](assets/AdminOrdersList.png)
 
 
 ### User Stories
@@ -48,8 +64,6 @@ As a user, I would like to edit the cart on the cart page.
 As a user, I want to be able to place orders for the plants (pickup/delivery).
 <br>
 As a user, I want to be able to sign in and create a new account (Token Authorization).
-<br>
-As a user, I would like to have a profile page that has a list of my pins.
 <br>
 
 Stretch Goals:
@@ -81,4 +95,4 @@ Use Google Maps API to be able to route the most efficient path for all the deli
 
 <br>
 
-For more info, check out the Frontend README file.
+For more info, check out the Backend README file.
