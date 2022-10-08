@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 from decouple import config
 
@@ -27,7 +28,7 @@ SECRET_KEY = config('SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['http://127.0.0.01', 'localhost', 'https://plantshop-backend.herokuapp.com/']
 
 # DATABASES = {}
 
@@ -53,8 +54,6 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
-
-# STRIPE_SECRET_KEY = ''
 
 from datetime import timedelta
 
@@ -92,6 +91,7 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -177,7 +177,9 @@ STATICFILES_DIR = [
     BASE_DIR / 'static'
 ]
 
-MEDIA_ROOT = 'static/images'
+MEDIA_ROOT = BASE_DIR / 'static/images'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -198,9 +200,14 @@ CORS_ALLOW_METHODS = [
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 AWS_QUERYSTRING_AUTH = False
-AWS_S3_ACCESS_KEY_ID = 'AKIATIPFMVT6KFTYEXG4'
-AWS_S3_SECRET_ACCESS_KEY =config('AWS_SECRET_KEY')
-AWS_STORAGE_BUCKET_NAME = 'plantshop-bucket-jrk'
+AWS_S3_ACCESS_KEY_ID = config('AWS_S3_ACCESS_KEY_ID')
+AWS_S3_SECRET_ACCESS_KEY = config('AWS_SECRET_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+
+
+# Checks to see if app is live,
+if os.getcwd() == '/app':
+    DEBUG = False
 
 
 
