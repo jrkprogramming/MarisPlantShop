@@ -194,7 +194,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 
 MEDIA_ROOT = BASE_DIR / 'static/images'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 # Default primary key field type
