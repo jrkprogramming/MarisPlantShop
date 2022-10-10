@@ -1,1 +1,1 @@
-web: gunicorn plantshop_django.wsgi --timeout 120 --log-file -
+web: gunicorn plantshop_django.wsgi --log-file -
