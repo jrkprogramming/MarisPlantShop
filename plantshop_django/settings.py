@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['http://127.0.0.01', 'localhost', 'http://plantshop-backend.herokuapp.com/']
+# ALLOWED_HOSTS = ['http://127.0.0.01', 'localhost', 'plantshop-backend.herokuapp.com/']
 ALLOWED_HOSTS = ['*']
 
 # DATABASES = {}
@@ -133,7 +133,8 @@ DATABASES = {
         'NAME': config('DATABASE_NAME'),
         'USER': config('DATABASE_USER'),
         'PASSWORD': config('DATABASE_PASS'),
-        'HOST': 'localhost'
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
@@ -173,16 +174,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-MEDIA_URL = 'images/'
 
-STATICFILES_DIR = [
-    BASE_DIR / 'static'
-]
+# STATICFILES_DIR = [
+#     BASE_DIR / 'static'
+# ]
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+MEDIA_URL = 'images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 
 MEDIA_ROOT = BASE_DIR / 'static/images'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Default primary key field type
