@@ -28,8 +28,8 @@ SECRET_KEY = config('SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['http://127.0.0.01', 'localhost', 'plantshop-backend.herokuapp.com/']
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.01', 'localhost', 'plantshop-backend.herokuapp.com']
+# ALLOWED_HOSTS = ['*']
 
 # DATABASES = {}
 
@@ -179,15 +179,15 @@ STATIC_URL = 'static/'
 #     BASE_DIR / 'static'
 # ]
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static/'),
+# )
 
 MEDIA_URL = 'images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 
 MEDIA_ROOT = BASE_DIR / 'static/images'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
