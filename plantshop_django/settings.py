@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'plantshop.apps.PlantshopConfig',
     'rest_framework',
     'corsheaders',
-    'storages'
+    'storages',
+    'gunicorn',
     # 'payments',
 ]
 
