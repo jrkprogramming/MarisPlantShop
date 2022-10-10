@@ -28,7 +28,8 @@ SECRET_KEY = config('SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://127.0.0.01', 'localhost', 'http://plantshop-backend.herokuapp.com/']
+# ALLOWED_HOSTS = ['http://127.0.0.01', 'localhost', 'http://plantshop-backend.herokuapp.com/']
+ALLOWED_HOSTS = ['*']
 
 # DATABASES = {}
 
