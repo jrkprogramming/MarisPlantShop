@@ -133,7 +133,7 @@ DATABASES = {
         'NAME': config('DATABASE_NAME'),
         'USER': config('DATABASE_USER'),
         'PASSWORD': config('DATABASE_PASS'),
-        'HOST': 'database-1.ctob6xjo1yan.us-east-1.rds.amazonaws.com',
+        'HOST': config('DATABASE_HOST'),
         'PORT': '5432',
     }
 }
