@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from decouple import config
+import django_heroku
 # import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -187,6 +188,8 @@ STATICFILES_DIR = [
 
 MEDIA_URL = '/images/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+django_heroku.settings(locals())
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 
