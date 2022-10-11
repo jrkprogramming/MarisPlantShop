@@ -1,1 +1,1 @@
-web: gunicorn plantshop_django.wsgi --log-file -
+web: gunicorn plantshop_django.wsgi
